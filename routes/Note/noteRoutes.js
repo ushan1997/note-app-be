@@ -14,6 +14,15 @@ router.post("/note/add", async (req, res) => {
       });
   });
 
+  router.get('/note/all', async (req, res) => {
+    await Note.find()
+        .then(data => {
+            res.status(200).send({ data: data })
+        }).catch(err => {
+            res.status(500).send({ data: err.message })
+        })
+})
+
 router.get('/note/:id', async (req, res) => {
     const noteId = req.params.id;
     await Note.findById(noteId)
@@ -25,13 +34,6 @@ router.get('/note/:id', async (req, res) => {
         });
 });
 
-router.get('/note/all', async (req, res) => {
-    await Note.find()
-        .then(data => {
-            res.status(200).send({ data: data })
-        }).catch(err => {
-            res.status(500).send({ data: err.message })
-        })
-})
+
 
 module.exports = router;

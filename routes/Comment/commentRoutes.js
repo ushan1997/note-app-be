@@ -12,6 +12,14 @@ router.post("/comment/add", async (req, res) => {
         res.status(400).send({ error });
       });
   });
+  router.get('/comment/all', async (req, res) => {
+    await Comment.find({})
+        .then(data => {
+            res.status(200).send({ data: data })
+        }).catch(err => {
+            res.status(500).send({ data: err.message })
+        })
+})
 
 router.get('/comment/:id', async (req, res) => {
     const commentId = req.params.id;
@@ -24,13 +32,6 @@ router.get('/comment/:id', async (req, res) => {
         });
 });
 
-router.get('/comment/all', async (req, res) => {
-    await Comment.find({})
-        .then(data => {
-            res.status(200).send({ data: data })
-        }).catch(err => {
-            res.status(500).send({ data: err.message })
-        })
-})
+
 
 module.exports = router;
